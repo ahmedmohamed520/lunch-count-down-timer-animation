@@ -1,0 +1,36 @@
+:root {
+    --clr-red: #fb6087;
+    --clr-gray-1: hsl(237, 18%, 59%);
+    --clr-gray-2: hsl(236, 21%, 26%);
+    --clr-gray-3: hsl(235, 16%, 14%);
+    --clr-gray-4: hsl(234, 17%, 12%);
+}
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+ul {
+    list-style-type: none;
+}
+a {
+    text-decoration: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: "Red Hat Text", sans-serif;
+}
+body {
+    height: 100vh;
+    overflow: hidden;
+    background-image: url("images/bg-stars.svg"), url("images/pattern-hills.svg"),
+        linear-gradient(to bottom, var(--clr-gray-4), var(--clr-gray-3));
+    background-repeat: repeat, no-repeat;
+    background-position: center, 80% bottom, center;
+    /* background-size: cover, contain, cover; */
+}
