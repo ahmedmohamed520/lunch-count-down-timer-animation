@@ -40,12 +40,13 @@ const App = () => {
 const Wrapper = styled.div`
     width: 600px;
     max-width: 90%;
-    margin: 60px auto;
-    text-align: center;
+    margin: 10rem auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 10rem);
+    text-align: center;
+
     .title {
         letter-spacing: 5px;
         text-transform: uppercase;

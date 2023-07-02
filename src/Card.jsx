@@ -41,6 +41,7 @@ const Wrapper = styled.div`
 
         display: flex;
         flex-direction: column;
+        width: 120px;
     }
     .top-half,
     .bottom-half {
@@ -48,7 +49,6 @@ const Wrapper = styled.div`
         height: 0.75em;
         line-height: 1;
         padding: 0.25em;
-        border-radius: 8px;
         display: flex;
         overflow: hidden;
 
@@ -58,9 +58,11 @@ const Wrapper = styled.div`
     }
     .top-half {
         border-bottom: 0.25px solid var(--clr-gray-4);
+        border-radius: 8px 8px 0 0;
     }
     .bottom-half {
         align-items: flex-end;
+        border-radius: 0 0 8px 8px;
     }
     .flip .top-slide,
     .flip .bottom-slide {
@@ -72,7 +74,6 @@ const Wrapper = styled.div`
         color: var(--clr-red);
         display: flex;
         justify-content: center;
-        border-radius: 8px;
     }
 
     //  Top
@@ -83,6 +84,7 @@ const Wrapper = styled.div`
         transform-origin: bottom;
         background-color: var(--clr-gray-2);
         border-bottom: 1px solid var(--clr-gray-3);
+        border-radius: 8px 8px 0 0;
     }
     .flip:hover .top-slide {
         animation: flip-bottom 0.2s ease-in;
@@ -97,6 +99,7 @@ const Wrapper = styled.div`
         transform-origin: top;
         background-color: var(--clr-gray-2);
         border-top: 1px solid var(--clr-gray-3);
+        border-radius: 0 0 8px 8px;
     }
 
     .flip:hover .bottom-slide {
@@ -130,10 +133,10 @@ const Wrapper = styled.div`
         border-radius: 50%;
     }
     .circle-left {
-        left: -4px;
+        left: -5px;
     }
     .circle-right {
-        right: -4px;
+        right: -5px;
     }
     .text {
         text-transform: uppercase;
@@ -155,30 +158,25 @@ const Wrapper = styled.div`
 
     @media only screen and (max-width: 704px) {
         .num {
-            padding: 1rem;
-            font-size: 2rem;
-            width: 70px;
-            border-radius: 5px;
-            margin-bottom: 1rem;
+            width: 75.2px;
+            font-size: 2.5rem;
         }
         .text {
             font-size: 0.5rem;
             letter-spacing: 2px;
         }
-        .rotater,
-        .top-half {
-            border-radius: 5px 5px 0 0;
-        }
+
+        //   Decoration
         .circle-left,
         .circle-right {
-            width: 7px;
-            height: 7px;
+            width: 5px;
+            height: 5px;
         }
         .circle-left {
-            left: -3px;
+            left: -2px;
         }
         .circle-right {
-            right: -3px;
+            right: -2px;
         }
     }
 `;
