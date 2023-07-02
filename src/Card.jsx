@@ -4,16 +4,22 @@ import { styled } from "styled-components";
 const Card = ({ value, title }) => {
     return (
         <Wrapper>
-            <h2 className="num">
+            <h2 className="num flip">
                 <div className="line"></div>
                 <div className="circle-left"></div>
                 <div className="circle-right"></div>
-                <div className="rotater">
-                    <div className="front"></div>
-                    <div className="back"></div>
+
+                <div className="top-half">
+                    {value}
+                    <div className="overlay"></div>
                 </div>
-                <div className="top-half"></div>
-                {value}
+                <div className="bottom-half">{value}</div>
+
+                <div className="top-slide">
+                    {value}
+                    <div className="overlay"></div>
+                </div>
+                <div className="bottom-slide">{value}</div>
             </h2>
             <h3 className="text">{title}</h3>
         </Wrapper>
@@ -24,46 +30,92 @@ const Wrapper = styled.div`
     perspective: 500px;
 
     .num {
-        padding: 2rem;
-        background-color: var(--clr-gray-2);
+        position: relative;
         color: var(--clr-red);
         margin-bottom: 2rem;
         box-shadow: 0 10px 0 var(--clr-gray-4);
-        border-radius: 15px;
         font-size: 3rem;
-        position: relative;
         overflow: hidden;
         user-select: none;
-        width: 120px;
         text-align: center;
+
+        display: flex;
+        flex-direction: column;
     }
-    .rotater,
+    .top-half,
+    .bottom-half {
+        position: relative;
+        height: 0.75em;
+        line-height: 1;
+        padding: 0.25em;
+        border-radius: 8px;
+        display: flex;
+        overflow: hidden;
+
+        background-color: var(--clr-gray-2);
+
+        justify-content: center;
+    }
     .top-half {
-        width: 100%;
-        border-radius: 15px 15px 0 0;
-        position: absolute;
-        top: 0;
-        left: 0;
+        border-bottom: 0.25px solid var(--clr-gray-4);
     }
-    .rotater {
-        background-color: var(--clr-gray-3);
-        z-index: 20;
-        height: 100%;
+    .bottom-half {
+        align-items: flex-end;
+    }
+    .flip .top-slide,
+    .flip .bottom-slide {
+        position: absolute;
+        width: 100%;
+        height: 50%;
+        overflow: hidden;
+        line-height: 1;
+        color: var(--clr-red);
+        display: flex;
+        justify-content: center;
+        border-radius: 8px;
+    }
+
+    //  Top
+    .flip .top-slide {
+        align-items: flex-start;
+        padding-top: 0.25em;
+        transform: rotateX(0);
+        transform-origin: bottom;
+        background-color: var(--clr-gray-2);
+        border-bottom: 1px solid var(--clr-gray-3);
+    }
+    .flip:hover .top-slide {
+        animation: flip-bottom 0.2s ease-in;
+    }
+
+    // Bottom
+    .flip .bottom-slide {
+        top: 50%;
+        padding-bottom: 0.25em;
+        align-items: flex-end;
         transform: rotateX(90deg);
         transform-origin: top;
+        background-color: var(--clr-gray-2);
+        border-top: 1px solid var(--clr-gray-3);
     }
-    //  .num:hover .rotater {
-    //      animation: animate 5s;
-    //  }
-    .top-half {
-        background-color: var(--clr-gray-4);
-        height: 50%;
-        opacity: 0.5;
+
+    .flip:hover .bottom-slide {
+        animation: flip-top 0.2s ease-in 0.2s;
+    }
+
+    .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.25;
         z-index: 15;
+        background-color: var(--clr-gray-4);
     }
+    // Decoration
     .circle-left,
-    .circle-right,
-    .line {
+    .circle-right {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -83,12 +135,6 @@ const Wrapper = styled.div`
     .circle-right {
         right: -4px;
     }
-    .line {
-        width: 100%;
-        height: 0.5px;
-        background-color: var(--clr-gray-4);
-        left: 0;
-    }
     .text {
         text-transform: uppercase;
         letter-spacing: 5px;
@@ -96,17 +142,14 @@ const Wrapper = styled.div`
         color: var(--clr-gray-1);
     }
 
-    @keyframes animate {
-        0% {
-            // transform: translateX(90%);
+    @keyframes flip-bottom {
+        100% {
+            transform: rotateX(90deg);
         }
-
-        50% {
-            transform: translateX(0);
-        }
-
-        0% {
-            transform: translateX(90%);
+    }
+    @keyframes flip-top {
+        100% {
+            transform: rotateX(0);
         }
     }
 
