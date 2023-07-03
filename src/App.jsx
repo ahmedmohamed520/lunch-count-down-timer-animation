@@ -5,19 +5,29 @@ import { timer } from "./utils";
 
 const App = () => {
     const [remindTime, setRemindTime] = useState(timer());
+    const [prevValues, setPrevValues] = useState(remindTime.map((item) => item.value));
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (timer()[0].value >= 0) setRemindTime(timer());
+            let newTimes = timer();
+
+            if (newTimes[0].value >= 0) {
+                setPrevValues(remindTime.map((item) => item.value));
+                setRemindTime(newTimes);
+            }
         }, 1000);
-    }, []);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [remindTime, prevValues]);
     return (
         <Wrapper>
             <h1 className="title">We're launching soon</h1>
             {remindTime[0].value >= 0 ? (
                 <div className="container">
-                    {remindTime.map((obj) => {
-                        return <Card key={obj.id} {...obj} />;
+                    {remindTime.map((obj, index) => {
+                        return <Card key={obj.id} {...obj} prevValue={prevValues[index]} />;
                     })}
                 </div>
             ) : (
@@ -40,11 +50,11 @@ const App = () => {
 const Wrapper = styled.div`
     width: 600px;
     max-width: 90%;
-    margin: 10rem auto;
+    margin: 12vh auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: calc(100vh - 10rem);
+    height: calc(100vh - 12vh);
     text-align: center;
 
     .title {

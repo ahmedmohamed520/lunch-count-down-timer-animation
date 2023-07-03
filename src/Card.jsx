@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
-const Card = ({ value, title }) => {
+const Card = ({ value, title, prevValue }) => {
+    const [flip, setFlip] = useState(value !== prevValue);
+
+    useEffect(() => {
+        setFlip(false);
+        if (value !== prevValue) setFlip(true);
+        else setFlip(false);
+    }, [value, prevValue]);
     return (
         <Wrapper>
-            <h2 className="num flip">
+            <h2 className={`num ${flip && "flip"}`}>
                 <div className="line"></div>
                 <div className="circle-left"></div>
                 <div className="circle-right"></div>
@@ -42,15 +49,17 @@ const Wrapper = styled.div`
         display: flex;
         flex-direction: column;
         width: 120px;
+        border-radius: 8px;
     }
     .top-half,
     .bottom-half {
         position: relative;
         height: 0.75em;
         line-height: 1;
-        padding: 0.25em;
+        padding: 0.5em;
         display: flex;
         overflow: hidden;
+        color: var(--clr-red);
 
         background-color: var(--clr-gray-2);
 
@@ -64,8 +73,8 @@ const Wrapper = styled.div`
         align-items: flex-end;
         border-radius: 0 0 8px 8px;
     }
-    .flip .top-slide,
-    .flip .bottom-slide {
+    .top-slide,
+    .bottom-slide {
         position: absolute;
         width: 100%;
         height: 50%;
@@ -77,23 +86,24 @@ const Wrapper = styled.div`
     }
 
     //  Top
-    .flip .top-slide {
+    .top-slide {
         align-items: flex-start;
-        padding-top: 0.25em;
+        padding-top: 0.5em;
         transform: rotateX(0);
         transform-origin: bottom;
         background-color: var(--clr-gray-2);
         border-bottom: 1px solid var(--clr-gray-3);
         border-radius: 8px 8px 0 0;
     }
-    .flip:hover .top-slide {
-        animation: flip-bottom 0.2s ease-in;
+
+    .flip .top-slide {
+        animation: flip-bottom 1s ease-in infinite;
     }
 
     // Bottom
-    .flip .bottom-slide {
+    .bottom-slide {
         top: 50%;
-        padding-bottom: 0.25em;
+        padding-bottom: 0.5em;
         align-items: flex-end;
         transform: rotateX(90deg);
         transform-origin: top;
@@ -102,8 +112,8 @@ const Wrapper = styled.div`
         border-radius: 0 0 8px 8px;
     }
 
-    .flip:hover .bottom-slide {
-        animation: flip-top 0.2s ease-in 0.2s;
+    .flip .bottom-slide {
+        animation: flip-top 1s ease-in 0.2s infinite;
     }
 
     .overlay {
@@ -146,11 +156,17 @@ const Wrapper = styled.div`
     }
 
     @keyframes flip-bottom {
+        20% {
+            transform: rotateX(90deg);
+        }
         100% {
             transform: rotateX(90deg);
         }
     }
     @keyframes flip-top {
+        20% {
+            transform: rotateX(0);
+        }
         100% {
             transform: rotateX(0);
         }
@@ -165,7 +181,16 @@ const Wrapper = styled.div`
             font-size: 0.5rem;
             letter-spacing: 2px;
         }
-
+        .top-half,
+        .bottom-half {
+            padding: 0.25em;
+        }
+        .top-slide {
+            padding-top: 0.25em;
+        }
+        .bottom-slide {
+            padding-bottom: 0.25em;
+        }
         //   Decoration
         .circle-left,
         .circle-right {
